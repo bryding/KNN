@@ -174,6 +174,18 @@ namespace KNN {
 			m_buildQueue.Dispose();
 		}
 
+		public JobHandle Dispose(JobHandle job) {
+#if ENABLE_UNITY_COLLECTIONS_CHECKS
+			job.Complete();
+			DisposeSentinel.Dispose(ref m_Safety, ref m_DisposeSentinel);
+#endif
+			job = m_permutation.Dispose(job);
+			job = m_nodes.Dispose(job);
+			job = m_rootNodeIndex.Dispose(job);
+			job = m_buildQueue.Dispose(job);
+			return job;
+		}
+
 		int GetKdNode(KdNodeBounds bounds, int start, int end) {
 			m_nodes.Add(new KdNode {
 				Bounds = bounds,
