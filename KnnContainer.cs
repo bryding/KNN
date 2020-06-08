@@ -619,11 +619,23 @@ namespace KNN {
 					}
 				}
 			}
-			
-			for (int i = 0; i < k; i++) {
-				result[i] = temp.MaxHeap.PopObjMax();
-			}
-			
+
+			// Astero Change: AR-156
+			// Only add results up to the size of the heap. If the result set is looking for
+			// more results than the heap has, fill it with -1 to indicate as such.
+      var originalCount = temp.MaxHeap.Count;
+      for (int i = 0; i < k; i++)
+      {
+        if (i < originalCount + 1)
+        {
+          result[i] = temp.MaxHeap.PopObjMax();
+        }
+        else
+        {
+          result[i] = -1;
+        }
+      }
+
 			temp.Dispose();
 		}
 	}
