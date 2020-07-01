@@ -626,7 +626,7 @@ namespace KNN {
       var originalCount = temp.MaxHeap.Count;
       for (int i = 0; i < k; i++)
       {
-        if (i < originalCount + 1)
+        if (i < originalCount)
         {
           result[i] = temp.MaxHeap.PopObjMax();
         }
